@@ -47,6 +47,7 @@ if "messages" not in st.session_state:
     st.session_state.dictation_evaluation_first_flg = True
     st.session_state.chat_open_flg = False
     st.session_state.problem = ""
+    st.session_state.is_paused = False
     
     st.session_state.openai_obj = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
     st.session_state.llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0.5)
@@ -131,8 +132,9 @@ st.session_state.dictation_chat_message = st.chat_input("※「ディクテー�
 if st.session_state.dictation_chat_message and not st.session_state.chat_open_flg:
     st.stop()
 
+# 修正２：「一時停止」機能の追加
 # 「英会話開始」ボタンが押された場合の処理
-if st.session_state.start_flg:
+if st.session_state.start_flg and not st.session_state.is_paused:
 
     # モード：「ディクテーション」
     # 「ディクテーション」ボタン押下時か、「英会話開始」ボタン押下時か、チャット送信時
@@ -285,3 +287,16 @@ if st.session_state.start_flg:
 
         # 「シャドーイング」ボタンを表示するために再描画
         st.rerun()
+
+# 修正２：「一時停止」機能の追加
+def toggle_pause():
+    """一時中断の切り替え処理"""
+    st.session_state.is_paused = not st.session_state.is_paused
+
+# 修正２：「一時停止」機能の追加
+# 一時中断ボタン
+if st.session_state.is_paused:
+    st.button("再開", on_click=toggle_pause, args=(), kwargs={}, help="会話を再開します。", type="primary")
+    st.warning("現在、一時中断中です。再開するには「再開」ボタンを押してください。")
+else:
+    st.button("一時中断", on_click=toggle_pause, args=(), kwargs={}, help="会話を一時中断します。")
