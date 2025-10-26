@@ -138,6 +138,40 @@ def create_chain(system_template):
 
     return chain
 
+# 修正１：英語レベルに応じた会話の難易度調整を実装
+def create_level_appropriate_chain(english_level):
+    """
+    英語レベルに応じた日常英会話用のChain作成
+    Args:
+        english_level: 英語レベル（初級者、中級者、上級者）
+    """
+    
+    if english_level == "初級者":
+        template = ct.SYSTEM_TEMPLATE_BASIC_CONVERSATION_BEGINNER
+    elif english_level == "中級者":
+        template = ct.SYSTEM_TEMPLATE_BASIC_CONVERSATION_INTERMEDIATE
+    else:  # 上級者
+        template = ct.SYSTEM_TEMPLATE_BASIC_CONVERSATION_ADVANCED
+    
+    return create_chain(template)
+
+# 修正１：英語レベルに応じた会話の難易度調整を実装
+def create_level_appropriate_problem_chain(english_level):
+    """
+    英語レベルに応じた問題生成用のChain作成
+    Args:
+        english_level: 英語レベル（初級者、中級者、上級者）
+    """
+    
+    if english_level == "初級者":
+        template = ct.SYSTEM_TEMPLATE_CREATE_PROBLEM_BEGINNER
+    elif english_level == "中級者":
+        template = ct.SYSTEM_TEMPLATE_CREATE_PROBLEM_INTERMEDIATE
+    else:  # 上級者
+        template = ct.SYSTEM_TEMPLATE_CREATE_PROBLEM_ADVANCED
+    
+    return create_chain(template)
+
 def create_problem_and_play_audio():
     """
     問題生成と音声ファイルの再生

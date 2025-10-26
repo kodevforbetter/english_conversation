@@ -94,6 +94,16 @@ with col3:
     st.session_state.pre_mode = st.session_state.mode
 with col4:
     st.session_state.englv = st.selectbox(label="英語レベル", options=ct.ENGLISH_LEVEL_OPTION, label_visibility="collapsed")
+    
+    # 修正１：英語レベルに応じた会話の難易度調整を実装
+    # 英語レベルが変更された場合の処理
+    if "prev_englv" not in st.session_state:
+        st.session_state.prev_englv = st.session_state.englv
+    
+    if st.session_state.englv != st.session_state.prev_englv:
+        # レベルに応じたChainを再作成
+        st.session_state.chain_basic_conversation = ft.create_level_appropriate_chain(st.session_state.englv)
+        st.session_state.prev_englv = st.session_state.englv
 
 with st.chat_message("assistant", avatar="images/ai_icon.jpg"):
     st.markdown("こちらは生成AIによる音声英会話の練習アプリです。何度も繰り返し練習し、英語力をアップさせましょう。")
@@ -132,7 +142,6 @@ st.session_state.dictation_chat_message = st.chat_input("※「ディクテー�
 if st.session_state.dictation_chat_message and not st.session_state.chat_open_flg:
     st.stop()
 
-# 修正２：「一時停止」機能の追加
 # 「英会話開始」ボタンが押された場合の処理
 if st.session_state.start_flg and not st.session_state.is_paused:
 
@@ -140,7 +149,8 @@ if st.session_state.start_flg and not st.session_state.is_paused:
     # 「ディクテーション」ボタン押下時か、「英会話開始」ボタン押下時か、チャット送信時
     if st.session_state.mode == ct.MODE_3 and (st.session_state.dictation_button_flg or st.session_state.dictation_count == 0 or st.session_state.dictation_chat_message):
         if st.session_state.dictation_first_flg:
-            st.session_state.chain_create_problem = ft.create_chain(ct.SYSTEM_TEMPLATE_CREATE_PROBLEM)
+            # 修正１：英語レベルに応じた会話の難易度調整を実装
+            st.session_state.chain_create_problem = ft.create_level_appropriate_problem_chain(st.session_state.englv)
             st.session_state.dictation_first_flg = False
         # チャット入力以外
         if not st.session_state.chat_open_flg:
@@ -236,7 +246,8 @@ if st.session_state.start_flg and not st.session_state.is_paused:
     # 「シャドーイング」ボタン押下時か、「英会話開始」ボタン押下時
     if st.session_state.mode == ct.MODE_2 and (st.session_state.shadowing_button_flg or st.session_state.shadowing_count == 0 or st.session_state.shadowing_audio_input_flg):
         if st.session_state.shadowing_first_flg:
-            st.session_state.chain_create_problem = ft.create_chain(ct.SYSTEM_TEMPLATE_CREATE_PROBLEM)
+            # 修正１：英語レベルに応じた会話の難易度調整を実装
+            st.session_state.chain_create_problem = ft.create_level_appropriate_problem_chain(st.session_state.englv)
             st.session_state.shadowing_first_flg = False
         
         if not st.session_state.shadowing_audio_input_flg:

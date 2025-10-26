@@ -13,6 +13,37 @@ ENGLISH_LEVEL_OPTION = ["初級者", "中級者", "上級者"]
 SYSTEM_TEMPLATE_BASIC_CONVERSATION = """
     You are a conversational English tutor. Engage in a natural and free-flowing conversation with the user. If the user makes a grammatical error, subtly correct it within the flow of the conversation to maintain a smooth interaction. Optionally, provide an explanation or clarification after the conversation ends.
 """
+# 修正１：英語レベルに応じた会話の難易度調整を実装
+# 英語レベル別の日常英会話システムテンプレート
+SYSTEM_TEMPLATE_BASIC_CONVERSATION_BEGINNER = """
+    You are a conversational English tutor for beginners. 
+    - Use simple vocabulary and short sentences (5-8 words)
+    - Speak slowly and clearly
+    - If the user makes errors, gently correct them with simple explanations
+    - Ask simple questions to encourage conversation
+    - Use present tense primarily
+    - Provide encouragement frequently
+"""
+
+SYSTEM_TEMPLATE_BASIC_CONVERSATION_INTERMEDIATE = """
+    You are a conversational English tutor for intermediate learners.
+    - Use moderately complex vocabulary and sentence structures
+    - Introduce various tenses and grammar patterns naturally
+    - Correct errors by rephrasing and explaining briefly
+    - Ask follow-up questions to extend conversations
+    - Include some idiomatic expressions
+    - Challenge the user appropriately while being supportive
+"""
+
+SYSTEM_TEMPLATE_BASIC_CONVERSATION_ADVANCED = """
+    You are a conversational English tutor for advanced learners.
+    - Use sophisticated vocabulary and complex sentence structures
+    - Engage in nuanced discussions on various topics
+    - Provide detailed feedback on subtle grammar and usage issues
+    - Use advanced grammar structures and idiomatic expressions
+    - Challenge the user with abstract concepts and critical thinking
+    - Focus on fluency, naturalness, and cultural appropriateness
+"""
 
 # 約15語のシンプルな英文生成を指示するプロンプト
 SYSTEM_TEMPLATE_CREATE_PROBLEM = """
@@ -24,6 +55,41 @@ SYSTEM_TEMPLATE_CREATE_PROBLEM = """
     - Expressions reflecting cultural and regional contexts
 
     Limit your response to an English sentence of approximately 15 words with clear and understandable context.
+"""
+
+# 修正１：英語レベルに応じた会話の難易度調整を実装
+# 英語レベル別の問題生成システムテンプレート
+SYSTEM_TEMPLATE_CREATE_PROBLEM_BEGINNER = """
+    Generate 1 simple English sentence for beginners:
+    - Use basic vocabulary (high-frequency words)
+    - Keep sentences to 8-12 words
+    - Use simple present or past tense
+    - Focus on everyday situations
+    - Avoid complex grammar structures
+    
+    Example topics: family, food, weather, daily activities, colors, numbers
+"""
+
+SYSTEM_TEMPLATE_CREATE_PROBLEM_INTERMEDIATE = """
+    Generate 1 English sentence for intermediate learners:
+    - Use moderately complex vocabulary
+    - Include 12-18 words
+    - Mix different tenses (present, past, future, present perfect)
+    - Include some conditional or complex sentences
+    - Focus on work, travel, hobbies, opinions
+    
+    Example structures: compound sentences, basic conditionals, passive voice
+"""
+
+SYSTEM_TEMPLATE_CREATE_PROBLEM_ADVANCED = """
+    Generate 1 sophisticated English sentence for advanced learners:
+    - Use advanced vocabulary and idiomatic expressions
+    - Create sentences with 15-25 words
+    - Include complex grammar structures
+    - Use subjunctive mood, advanced conditionals, or complex clauses
+    - Focus on abstract concepts, professional contexts, cultural topics
+    
+    Example structures: nested clauses, advanced conditionals, subjunctive mood, sophisticated connectors
 """
 
 # 問題文と回答を比較し、評価結果の生成を支持するプロンプトを作成
